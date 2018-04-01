@@ -14,15 +14,15 @@ require(GGally)
 
 # Set working directory
 # Project must be named "ttfl_planner" and be located in "~/Documents"'s sub-directory
-dirname <- "network_insta"
+dirname <- "NBA_Instagram_Analysis"
 dirs <- list.dirs(path=file.path("~/Documents/"), recursive=T)
 dir_wd <- names(unlist(sapply(dirs, grep, pattern=dirname))[1])
 setwd(dir_wd)
 rm(dirname,  dirs,  dir_wd)
 
 # Get data
-network <- read.csv2(file = 'network.csv',  sep = ',', header = FALSE)
-names <- scan(file = '../get_data_from_scraper/username_private_removed.txt', what = '', sep = '\n')
+network <- read.csv2(file = 'database/all-stars_2018/adjacency_matrix.csv',  sep = ',', header = FALSE)
+usernames <- scan(file = '../get_data_from_scraper/username_private_removed.txt', what = '', sep = '\n')
 players <- c(
     "Aaron Gordon", "Al Horford", 
     "Al-Farouq Aminu", "Alex Abrines", 
@@ -175,7 +175,7 @@ net = network(network,
               ignore.eval = TRUE, 
               names.eval = "weights")
 net %v% "team" = as.character(teams)
-network.vertex.names(net) = names
+network.vertex.names(net) = usernames
 y = colors$COLOR %>% as.vector()
 names(y) = c('CLE', 'BOS', 'HOU', 'GSW', 'DET', 'CHA', 'IND', 'BKN', 'ORL', 'MIA', 
              'WAS', 'PHI', 'MIL', 'NOP', 'MEM', 'DAL', 'ATL', 'UTA', 'DEN', 'SAS', 
