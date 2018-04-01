@@ -7,8 +7,8 @@ import requests
 import errno
 import os
 import pandas as pd
-
-type_of_media = dict([(True, "Video"), (False, "Image")])
+import datetime
+import tqdm
 
 
 def get_simple_summary(scrape):
@@ -24,45 +24,25 @@ def get_simple_summary(scrape):
             scrape.posts = []
             scrape.last_scraped_filemtime = 0
 
+            user = scrape.get_user(username)
+
+            if not user:
+                continue
+
+            username = user['username']
+
+            print(username)
+            it = scrape.query_media_gen(user)
+            itm = 0
+            for item in it:
+                print(item)
+            print('oui')
+
             try:
-                user = scrape.get_user(username)
-
-                if not user:
-                    continue
-
-                username = user['username']
-                user_dataframe = pd.DataFrame(columns=['LIKE', 'COMMENTS'])
-
-                print(username)
-                for i, item in enumerate(scrape.query_media_gen(user)):
-                    if i % 200 == 0 and i > 0:
-                        print(i)
-
-                    likes = item['edge_media_preview_like']['count']
-                    comments = item['edge_media_to_comment']['count']
-                    likes_comments_df = pd.DataFrame([[likes, comments]], columns=['LIKE', 'COMMENTS'])
-                    user_dataframe = user_dataframe.append(likes_comments_df, ignore_index=True)
-
-                    # if not item['is_video']:
-                    #     url = item['thumbnail_resources'][1]['src']
-                    #     r = requests.get(url)
-                    #
-                    #     try:
-                    #         os.makedirs(username)
-                    #     except OSError as e:
-                    #         if e.errno != errno.EEXIST:
-                    #             raise
-                    #     with open(username + '/img' + str(i + 1) + '.jpg', 'wb') as f:
-                    #         f.write(r.content)
-                try:
-                    os.makedirs(username)
-                except OSError as e:
-                    if e.errno != errno.EEXIST:
-                        raise
-                user_dataframe.to_csv(username + '/likes_comments' + '.csv')
-
-            except ValueError:
-                scrape.logger.error("Unable to scrape user - %s" % username)
+                os.makedirs('../network/' + username)
+            except OSError as e:
+                if e.errno != errno.EEXIST:
+                    raise
 
     finally:
         scrape.quit = True
