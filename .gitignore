@@ -4,7 +4,9 @@
 *.json
 *.sh
 *.log
+*.txt
 venv
 env
 .Rproj.user
 .DS_Store
+Instagram-API-python
