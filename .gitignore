@@ -6,3 +6,6 @@
 *.log
 *.csv
 venv
+env
+.Rproj.user
+.DS_Store

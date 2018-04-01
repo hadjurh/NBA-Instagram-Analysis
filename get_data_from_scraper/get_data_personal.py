@@ -59,11 +59,12 @@ def get_simple_summary(scrape):
                 #         f.write(r.content)
 
             try:
-                os.makedirs('../instagram_data/' + username)
+                os.makedirs('database/instagram_user_by_user_data/' + username)
             except OSError as e:
                 if e.errno != errno.EEXIST:
                     raise
-            user_dataframe.to_csv('../instagram_data/' + username + '/likes_comments' + '.csv')
+            print(user_dataframe)
+            user_dataframe.to_csv('database/instagram_user_by_user_data/' + username + '/likes_comments' + '.csv')
 
     finally:
         scrape.quit = True
