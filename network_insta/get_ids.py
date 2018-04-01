@@ -1,17 +1,12 @@
 import requests
-import csv
+from utils import get_list_from_csv
 
 
-def get_ids(source_file_path, dest_file_path):
-    # Get list of users ['user1', 'user2', ...]
-    users = list()
-    with open(source_file_path, newline='') as csv_file:
-        reader = csv.reader(csv_file, delimiter=',')
-        for row in reader:
-            users.append(row[1])
-    users = users[1:]  # Remove column name
+def get_ids(data_file, dest_file):
+    # Get list of user names ['user_name1', 'user_name2', ...]
+    users = get_list_from_csv(data_file, 1)
 
-    file = open(dest_file_path, 'w')
+    file = open(dest_file, 'w')
 
     # Go to specific user
     for user in users:

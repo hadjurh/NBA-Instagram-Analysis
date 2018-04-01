@@ -10,3 +10,4 @@ env
 .Rproj.user
 .DS_Store
 Instagram-API-python
+__pycache__
