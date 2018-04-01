@@ -4,7 +4,6 @@
 *.json
 *.sh
 *.log
-*.csv
 venv
 env
 .Rproj.user
