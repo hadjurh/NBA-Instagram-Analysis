@@ -3,7 +3,7 @@ import os
 import errno
 import  numpy as np
 from get_insta_data import get_insta_data
-from make_network import build_adjacency_matrix
+from make_matrix_from_json_table import build_adjacency_matrix
 
 # ARG1 Name of new folder where to put 'player_username_id_team.csv'
 # ARG2 Folder that contains your username and password ("username\npassword\n")
