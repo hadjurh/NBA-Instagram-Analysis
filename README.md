@@ -12,7 +12,6 @@ The goal of this project is to learn about NBA players activity on Instagram.
 | Get each post stats (date, #likes, #comments, type of media) given a user | &#10003; |
 | From a list of player, get the adjacency matrix of their relationships on Instagram | &#10003; |
 
-
 ## Usage & Options
 
 * Store post by post stats in `database/instagram_user_by_user_data/username.txt`.
@@ -30,3 +29,10 @@ where the usernames and IDs wanted are stored.
 Make sure to also create a file `user.txt` which contains `'username \n password \n'`.
 
     Command: `python3 network_insta/build_network.py name_of_folder user.txt`
+    
+## Example of visualization
+
+![alt text][network]
+
+[network]: https://i.imgur.com/sQQ5kal.png "Example of Instagram relations network"
+
