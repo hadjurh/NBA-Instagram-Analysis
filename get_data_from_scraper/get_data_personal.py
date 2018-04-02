@@ -63,7 +63,6 @@ def get_simple_summary(scrape):
             except OSError as e:
                 if e.errno != errno.EEXIST:
                     raise
-            print(user_dataframe)
             user_dataframe.to_csv('database/instagram_user_by_user_data/' + username + '/likes_comments' + '.csv')
 
     finally:
