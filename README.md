@@ -1,4 +1,4 @@
-#NBA Instagram Analysis
+# NBA Instagram Analysis
 
 ## Data Analysis
 
