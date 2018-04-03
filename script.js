@@ -30,7 +30,7 @@ let dataFlare = [];
 
 const smallData = "database/all-stars_2018/";
 const fullData = "database/network_players_gt46_games/";
-const dataInput = fullData;
+const dataInput = smallData;
 
 d3.csv(dataInput + "player_username_id_team.csv", (dataCSV) => {
     dataCSV.forEach((player) => {
@@ -64,10 +64,23 @@ d3.csv(dataInput + "player_username_id_team.csv", (dataCSV) => {
 
         cluster(root);
 
+        let uniqueLink = packageImports(root.leaves());
+
+        uniqueLink.forEach((l, i) => {
+            let linkSymmetricalIndex = uniqueLink.findIndex((linkSymmetricalToFind) => {
+                return (l[0] === linkSymmetricalToFind[linkSymmetricalToFind.length - 1]) && (l[l.length - 1] === linkSymmetricalToFind[0]);
+            });
+            if(linkSymmetricalIndex > -1) {
+                uniqueLink.splice(linkSymmetricalIndex,1);
+                l.isSymmetrical = true;
+            }
+        });
+
+
         link = link
-            .data(packageImports(root.leaves()))
+            .data(uniqueLink)
             .enter().append("path")
-                .each((d) => { d.source = d[0], d.target = d[d.length - 1]; })
+                .each((d) => {d.source = d[0], d.target = d[d.length - 1]; })
                 .attr("class", "link")
             .attr("d", line);
 
@@ -86,21 +99,30 @@ d3.csv(dataInput + "player_username_id_team.csv", (dataCSV) => {
     });
 });
 
+function filterUniqueLink() {
+
+}
+
 function mouseovered(d) {
 
     link.each(function (l) {
         const currentLink = d3.select(this);
-        if(l.target === d) {
-            currentLink
-                .style("stroke", "green");
+        if(l.target === d ) {
+            if(!isSymmetrical(l,d)) {
+                currentLink.style("stroke", "green");
+            }
         } else if (l.source === d ) {
-            currentLink
-                .style("stroke", "red");
+            if(!isSymmetrical(l,d)) {
+                currentLink.style("stroke", "red");
+            }
         } else {
-            currentLink
-                    .style("opacity", 0);
+            currentLink.style("opacity", 0);
         }
     })
+}
+
+function isSymmetrical(l1,l2) {
+    return l1.isSymmetrical || l2.isSymmetrical;
 }
 
 function mouseouted(d) {
