@@ -18,7 +18,7 @@ setwd(dir_wd)
 rm(dirname, dirs, dir_wd)
 
 # Get data
-kingjames <- read.csv2(file = 'kingjames/likes_comments.csv', sep = ',')
+kingjames <- read.csv2(file = '../NBA_Instagram_Analysis/database/instagram_user_by_user_data/kingjames/likes_comments.csv', sep = ',')
 kingjames <- kingjames[, -1]
 kingjames$DATE <- kingjames$DATE %>% strptime(format = '%Y-%m-%d %H:%M:%S', tz = 'EST')
 

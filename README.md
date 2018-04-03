@@ -20,7 +20,7 @@ The goal of this project is to learn about NBA players activity on Instagram.
 
     | Options        | Features       |
     | -------------  | -------------  |
-    | `--filename`   | Get the data for each user in the file |
+    | `--filename filepath` | Get the data for each user in the file |
     
 * Build the adjacency matrix from a list of users. 
 Make sure to create a folder in `database/` which contains `player_username_id_team.csv`.
@@ -29,6 +29,9 @@ where the usernames and IDs wanted are stored.
 Make sure to also create a file `user.txt` which contains `'username \n password \n'`.
 
     Command: `python3 network_insta/build_network.py name_of_folder user.txt`
+    
+    | Options        | Features       |
+    | -------------  | -------------  |
     
 ## Example of visualization
 
