@@ -39,4 +39,4 @@ def get_attribute(data_file, attribute):
 
 
 if __name__ == '__main__':
-    get_attribute('../database/network_players_gt46_games/player_username_id_team.csv', 'FOLLOWERS')
+    get_attribute('../database/frotteman/player_username_id_team.csv', 'FOLLOWERS')

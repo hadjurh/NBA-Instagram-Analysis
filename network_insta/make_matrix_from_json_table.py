@@ -17,7 +17,7 @@ def build_dict(data_file, json_file):
     ids_followings_json = json.load(open(ids_followings_file))
 
     for user_id, user_name in zip(user_ids, user_names):
-        all_followings[user_name] = ids_followings_json[user_id]
+        all_followings[user_name] = ids_followings_json[str(user_id)]
 
     return all_followings, user_ids, user_names
 
