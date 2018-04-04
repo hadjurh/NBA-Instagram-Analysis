@@ -28,10 +28,12 @@ network <- network[-42,-42]
 real_names <- user_data$NAME %>% unfactor()
 usernames <- user_data$USERNAME %>% unfactor()
 followers <- user_data$FOLLOWERS
+nature <- user_data$NATURE %>% unfactor()
 
 # Scale followers
-min_scale <- 1
-max_scale <- 5
+min_scale <- 0.1
+max_scale <- 10
+followers = log(followers, 10)
 min_fol <- followers %>% min()
 max_fol <- followers %>% max()
 followers = followers * ((max_scale - min_scale) / (max_fol - min_fol))
@@ -41,17 +43,19 @@ followers = (max_scale - followers %>% max()) + followers
 net = network(network, 
               ignore.eval = TRUE, 
               names.eval = "weights")
-network.vertex.names(net) = usernames
-y = colors$COLOR %>% as.vector()
-names(y) = c('CLE', 'BOS', 'HOU', 'GSW', 'DET', 'CHA', 'IND', 'BKN', 'ORL', 'MIA', 
-             'WAS', 'PHI', 'MIL', 'NOP', 'MEM', 'DAL', 'ATL', 'UTA', 'DEN', 'SAS', 
-             'MIN', 'POR', 'PHX', 'SAC', 'TOR', 'CHI', 'OKC', 'NYK', 'LAL', 'LAC')
-
+network.vertex.names(net) = real_names
+y = rainbow(21, s = 1, v = 1, start = 0, end = max(1, 21 - 1) / 21, alpha = 1)
+y = substr(y,1,nchar(y)-2)
+y = c("#FF0000", "#49FF00", "#FF00DB", "#FFDB00", "#DBFF00", "#0092FF",
+  "#0049FF", "#00FF00", "#00FF49", "#4900FF", "#00FFDB", "#00DBFF",
+  "#92FF00", "#FF0092", "#0000FF", "#00FF92", "#9200FF", "#DB00FF",
+  "#FF9200", "#FF4900", "#FF0049")
+names(y) = user_data$NATURE %>% levels()
 
 # Plot
-ggnet2(net, node.size = followers,
+ggnet2(net, node.size = followers, node.color = nature,
        edge.size = 0.1, edge.color = "grey", 
-       arrow.size = 8, arrow.gap = 0.01, 
-       label = usernames, label.size = 10, label.color = 'grey28') + 
-    theme(legend.position = "none")
+       arrow.size = 7, arrow.gap = 0.01, 
+       label = real_names, label.size = 6, label.color = 'black', palette = y) +
+       guides(size=FALSE)
 
