@@ -28,7 +28,7 @@ username = ids[0]
 password = ids[1]
 
 
-def main(argv):
+def build(argv):
     # if options.usercenter:
     #     print(options.usercenter)
 
@@ -39,4 +39,4 @@ def main(argv):
 
 
 if __name__ == '__main__':
-    main(argv=sys.argv)
+    build(argv=sys.argv)
