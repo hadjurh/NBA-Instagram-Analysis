@@ -23,13 +23,15 @@ rm(dirname,  dirs,  dir_wd)
 # Get data
 network <- read.csv2(file = 'frotteman/adjacency_matrix.csv',  sep = ',', header = FALSE)
 user_data <- read.csv2(file = 'frotteman/player_username_id_team.csv', sep =',')
+user_data <- user_data[-42,]
+network <- network[-42,-42]
 real_names <- user_data$NAME %>% unfactor()
 usernames <- user_data$USERNAME %>% unfactor()
 followers <- user_data$FOLLOWERS
 
 # Scale followers
-min_scale <- 2
-max_scale <- 20
+min_scale <- 1
+max_scale <- 5
 min_fol <- followers %>% min()
 max_fol <- followers %>% max()
 followers = followers * ((max_scale - min_scale) / (max_fol - min_fol))
@@ -40,10 +42,16 @@ net = network(network,
               ignore.eval = TRUE, 
               names.eval = "weights")
 network.vertex.names(net) = usernames
+y = colors$COLOR %>% as.vector()
+names(y) = c('CLE', 'BOS', 'HOU', 'GSW', 'DET', 'CHA', 'IND', 'BKN', 'ORL', 'MIA', 
+             'WAS', 'PHI', 'MIL', 'NOP', 'MEM', 'DAL', 'ATL', 'UTA', 'DEN', 'SAS', 
+             'MIN', 'POR', 'PHX', 'SAC', 'TOR', 'CHI', 'OKC', 'NYK', 'LAL', 'LAC')
+
 
 # Plot
 ggnet2(net, node.size = followers,
        edge.size = 0.1, edge.color = "grey", 
-       arrow.size = 4, arrow.gap = 0.005, 
-       label = usernames, label.size = 5, label.color = 'grey28') + 
+       arrow.size = 8, arrow.gap = 0.01, 
+       label = usernames, label.size = 10, label.color = 'grey28') + 
     theme(legend.position = "none")
+
