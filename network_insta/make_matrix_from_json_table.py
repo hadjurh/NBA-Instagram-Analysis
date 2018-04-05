@@ -40,6 +40,23 @@ def build_adjacency_matrix(data_file, json_file):
     return adjacency_matrix
 
 
+def build_adjacency_matrix_data_frame(data_frame, relation_dict):
+    ids_followings = relation_dict
+    user_names = data_frame['USERNAME'].tolist()
+
+    adjacency_matrix = list()
+    for user_name in tqdm.tqdm(user_names, unit='user'):
+        followings = ids_followings[user_name]
+
+        user_network = [int(user in followings) for user in user_names]
+
+        adjacency_matrix.append(user_network)
+
+    adjacency_matrix = np.matrix(adjacency_matrix)
+
+    return adjacency_matrix
+
+
 if __name__ == '__main__':
     network_matrix = build_adjacency_matrix('../database/network_players_gt46_games/player_username_id_team.csv',
                                             '../database/network_players_gt46_games/followings.json')
