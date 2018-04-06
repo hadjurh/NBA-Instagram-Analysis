@@ -11,8 +11,7 @@ def get_insta_data(data_file, json_dest_file, username, password):
     # Get list of user IDs ['user_id1', 'user_id2', ...]
     user_ids = get_list_from_csv(data_file, 2)
 
-    print('Users:', user_names[:10])
-    print('IDs:', user_ids[:10])
+    print('There are', len(user_names), "users to analyze (" + user_names[:3] + "...).")
 
     all_followings = dict.fromkeys(user_ids)
 
@@ -41,10 +40,9 @@ def get_insta_data_from_data_frame(data_frame, username, password):
     # Get list of user IDs ['user_id1', 'user_id2', ...]
     user_ids = data_frame['ID'].tolist()
 
-    print('Users:', user_names[:10], '...')
-    print('IDs:', user_ids[:10], '...')
+    print('There are', len(user_names), "users to analyze (" + str(user_names[:3]) + "...).")
 
-    all_followings = dict.fromkeys(user_ids)
+    all_followings = dict.fromkeys(user_names)
 
     api = InstagramAPI(username, password)
     api.login()
