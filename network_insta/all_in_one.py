@@ -20,7 +20,7 @@ def setup_user(name, username, login, password):
     user_data_frame = pd.DataFrame([[name, username, False]], columns=['NAME', 'USERNAME', 'PRIVATE'])
 
     # Add ID to csv
-    add_attribute(user_data_frame, 'ID')
+    add_attribute(user_data_frame, 'ID', login, password)
 
     # Find relations ('followings', 'followers', or 'both')
     user_data_frame = add_relationships(user_data_frame, login, password, relation='followers')
@@ -46,7 +46,6 @@ def setup_list_of_users(data_path, login, password):
     users_biography = list()
 
     for user in tqdm.tqdm(users_names):
-        time.sleep(abs(np.random.normal(1, 0.2)))
         api.searchUsername(user)
         last_json = api.LastJson
         users_username.append(last_json['user']['username'])
